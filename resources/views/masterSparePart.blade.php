@@ -24,15 +24,20 @@
                 <div class="table-responsive">
                     <table id="dataTraining" class="table table-bordered table-striped hover" style="background: transparent;">
                         <thead>
-                            <th class="text-center">Kode PO</th>
+                            <th class="text-center">No Spare Part</th>
                             <th class="text-center">Nama Spare Part</th>
                             <th class="text-center">Kategori</th>
                             <th class="text-center">Price</th>
-                            <th class="text-center">
-                                Qty
-                            </th>
                         </thead>
                         <tbody>
+                            @foreach ($data as $item)
+                                <tr onclick="modalDetail({{ $item->no_part }})">
+                                    <td class="text-center">{{ $item->no_part }}</td>
+                                    <td class="text-center">{{ $item->name }}</td>
+                                    <td class="text-center">{{ $item->category }}</td>
+                                    <td class="text-center">{{ $item->price }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -56,7 +61,7 @@
                                 <div class="mb-3 form">
                                     <label for="exampleFormControlInput1" class="form-label heading">Nomor Part</label>
                                     <input required="" class="input" type="number" name="kode_part" id="kode_part"
-                                        required />
+                                        required readonly />
                                 </div>
                             </div>
                             <div class="col-6">
@@ -100,14 +105,23 @@
         <div class="modal-dialog modal-md border-0">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-between">
-                    <h1 class="modal-title fs-5 heading" id="detailTrainingLabel">Detail Training OJT</h1>
+                    <h1 class="modal-title fs-5 heading" id="detailTrainingLabel">Detail Spare Part</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="body-detail">
                 </div>
+
             </div>
         </div>
     </div>
+    @php
+    if ($lastData != null) {
+        $noPart = $lastData->no_part;
+    } else {
+        $noPart = 0;
+    }
+        
+    @endphp
     <script>
         // Guidance Table
         var table = $('#dataTraining').DataTable({
@@ -123,11 +137,17 @@
             }],
         });
 
+        var lastNoPart = {{ $noPart }};
+        var kodePart = String(lastNoPart + 1).padStart(5, '0');
+        document.getElementById('kode_part').value = kodePart;
+
+        console.log(lastNo);
+        
         // // Modal Detail Training
-        // function modalDetail(id) {
-        //     modalUrl = `/detail-modal/training-ojt/${id}`;
-        //     $('#detailTraining').modal('show');
-        //     $('.modal-body').load(modalUrl);
-        // }
+        function modalDetail(id) {
+            modalUrl = `/detail-modal/sparepart/${id}`;
+            $('#detailTraining').modal('show');
+            $('#body-detail').load(modalUrl);
+        }
     </script>
 @endsection

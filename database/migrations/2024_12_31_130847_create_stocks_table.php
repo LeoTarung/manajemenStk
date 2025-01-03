@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pkb', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('no_sparepart');
+            $table->integer('current_capacity')->default('0');
+            $table->integer('min_stock')->default('0');
+            $table->integer('max_stock')->default('0');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pkb');
+        Schema::dropIfExists('stocks');
     }
 };

@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PKB;
+// use App\Models\PKB;
 use App\Models\SparePart;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 
 class SparePartController extends Controller
 {
-    public function indexStok()
+    public function index()
     {
-        $title = 'Data Stok';
+        $title = 'Master Data Spare Part';
+        $data = SparePart::all();
+        $lastData = $data->last();
+        // dd($test);
         
-        return view('masterSparePart', compact('title'));
+        return view('masterSparePart', compact('title','data','lastData'));
     }
 
     public function addSparePart(Request $request)
@@ -20,10 +24,14 @@ class SparePartController extends Controller
         try {
             // dd($request);
             SparePart::create([
-                'kode_part' => $request->kode_part,
+                'no_part' => $request->kode_part,
                 'name' => $request->name,
                 'category' => $request->category,
                 'price' => $request->price,
+            ]);
+
+            Stock::create([
+                'no_sparepart' => $request->kode_part,
             ]);
 
             // Redirect back with success message
@@ -37,13 +45,12 @@ class SparePartController extends Controller
     public function updateSparePart(Request $request, $id)
     {
         try {
-            $data = SparePart::where()->first();
-            $data::update([
-                'kode_part' => $request->kode_part,
-                'name' => $request->namespace,
+            $data = SparePart::where('no_part', $id)->first();
+            $data->update([
+                'no_part' => $request->kode_part,
+                'name' => $request->name,
                 'category' => $request->category,
                 'price' => $request->price,
-                'qty' => $request->qty
             ]);
 
             // Redirect back with success message
@@ -54,19 +61,11 @@ class SparePartController extends Controller
         }
     }
 
-
-    public function indexPKB()
-    {
-        $title = 'PKB';
-
-        return view('masterSparePart', compact('title'));
-    }
-
-    public function addPKB(Request $request, $id)
+    public function deleteSparePart(Request $request, $id)
     {
         try {
-            // $data = SparePart::where('kode_po', $id)->first();
-            PKB::create([]);
+            $data = SparePart::where('no_part', $id)->first();
+            $data->delete();
 
             // Redirect back with success message
             return redirect()->back()->with('success', 'Informasi added successfully.');
@@ -75,17 +74,46 @@ class SparePartController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan data: ' . $e->getMessage());
         }
     }
-    public function updatePKB(Request $request, $id)
-    {
-        try {
-            $data = SparePart::where('kode_po', $id)->first();
-            $data::update([]);
 
-            // Redirect back with success message
-            return redirect()->back()->with('success', 'Informasi added successfully.');
-        } catch (\Exception $e) {
-            // Redirect back with an error message
-            return redirect()->back()->with('error', 'Gagal menambahkan data: ' . $e->getMessage());
-        }
+
+    public function modalUpdate(Request $request, $id)
+    {
+        $detailData = SparePart::where('no_part', $id)->first();
+        return view('modalDetailSparePart', compact('detailData'));
     }
+
+    
+    // public function indexPKB()
+    // {
+    //     $title = 'PKB';
+
+    //     return view('masterSparePart', compact('title'));
+    // }
+
+    // public function addPKB(Request $request, $id)
+    // {
+    //     try {
+    //         // $data = SparePart::where('kode_po', $id)->first();
+    //         PKB::create([]);
+
+    //         // Redirect back with success message
+    //         return redirect()->back()->with('success', 'Informasi added successfully.');
+    //     } catch (\Exception $e) {
+    //         // Redirect back with an error message
+    //         return redirect()->back()->with('error', 'Gagal menambahkan data: ' . $e->getMessage());
+    //     }
+    // }
+    // public function updatePKB(Request $request, $id)
+    // {
+    //     try {
+    //         $data = SparePart::where('kode_po', $id)->first();
+    //         $data::update([]);
+
+    //         // Redirect back with success message
+    //         return redirect()->back()->with('success', 'Informasi added successfully.');
+    //     } catch (\Exception $e) {
+    //         // Redirect back with an error message
+    //         return redirect()->back()->with('error', 'Gagal menambahkan data: ' . $e->getMessage());
+    //     }
+    // }
 }

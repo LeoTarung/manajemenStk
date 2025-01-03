@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spare_parts', function (Blueprint $table) {
-            $table->id('kode_part');
+            $table->id('no_part');
             $table->string('name');
-            $table->string('category');
-            $table->integer('price');
-            $table->integer('qty')->default('0');
+            $table->string('category')->nullable();
+            $table->integer('price')->nullable();
+            // $table->integer('qty')->default('0');
             $table->timestamps();
         });
     }

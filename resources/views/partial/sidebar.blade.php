@@ -107,13 +107,13 @@
                     </li>
                 @endif --}}
                 <li>
-                    <a href="/data/po">
-                        <i class="menu-icon fa fa-truck"></i>Stok Spare Part
+                    <a href="/master-data/sparepart">
+                        <i class="menu-icon fa fa-database"></i>Master Data Spare Part
                     </a>
                 </li>
                 <li>
-                    <a href="/data/po">
-                        <i class="menu-icon fa fa-truck"></i>Request Spare Part
+                    <a href="/stock">
+                        <i class="menu-icon fa fa-gears"></i>Stock
                     </a>
                 </li>
             </ul>
