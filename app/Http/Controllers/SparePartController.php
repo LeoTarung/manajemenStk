@@ -26,7 +26,6 @@ class SparePartController extends Controller
             SparePart::create([
                 'no_part' => $request->kode_part,
                 'name' => $request->name,
-                'category' => $request->category,
                 'price' => $request->price,
             ]);
 
@@ -49,7 +48,6 @@ class SparePartController extends Controller
             $data->update([
                 'no_part' => $request->kode_part,
                 'name' => $request->name,
-                'category' => $request->category,
                 'price' => $request->price,
             ]);
 

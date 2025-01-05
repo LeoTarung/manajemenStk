@@ -107,6 +107,10 @@
                     </li>
                 @endif --}}
                 <li>
+                    <a href="/">
+                        <i class="menu-icon fa fa-home"></i>Dashboard</a>
+                </li>
+                <li>
                     <a href="/master-data/sparepart">
                         <i class="menu-icon fa fa-database"></i>Master Data Spare Part
                     </a>
@@ -116,6 +120,12 @@
                         <i class="menu-icon fa fa-gears"></i>Stock
                     </a>
                 </li>
+                <li>
+                    <a href="/log-stock">
+                        <i class="menu-icon fa fa-book"></i>Log Stock
+                    </a>
+                </li>
+                
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

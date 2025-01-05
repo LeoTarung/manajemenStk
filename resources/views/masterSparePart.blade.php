@@ -26,7 +26,6 @@
                         <thead>
                             <th class="text-center">No Spare Part</th>
                             <th class="text-center">Nama Spare Part</th>
-                            <th class="text-center">Kategori</th>
                             <th class="text-center">Price</th>
                         </thead>
                         <tbody>
@@ -34,7 +33,6 @@
                                 <tr onclick="modalDetail({{ $item->no_part }})">
                                     <td class="text-center">{{ $item->no_part }}</td>
                                     <td class="text-center">{{ $item->name }}</td>
-                                    <td class="text-center">{{ $item->category }}</td>
                                     <td class="text-center">{{ $item->price }}</td>
                                 </tr>
                             @endforeach
@@ -57,32 +55,21 @@
                     <div class="modal-body">
                         @csrf
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="mb-3 form">
                                     <label for="exampleFormControlInput1" class="form-label heading">Nomor Part</label>
                                     <input required="" class="input" type="number" name="kode_part" id="kode_part"
                                         required readonly />
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="mb-3 form">
                                     <label for="exampleFormControlInput1" class="form-label heading">Nama Part</label>
                                     <input required="" class="input" type="text" name="name" id="name"
                                         placeholder="Spare Part" required />
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="mb-3 form">
-                                    <label for="exampleFormControlInput1" class="form-label heading">Kategori</label>
-                                    <select id="section" class="js-example-basic-single form-control input"
-                                        style="width: 100%" name="category">
-                                        <option value="">-</option>
-                                        <option value="Roda 4">Roda 4</option>
-                                        <option value="Roda 2">Roda 2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="mb-3 form">
                                     <label for="exampleFormControlInput1" class="form-label heading">Price</label>
                                     <input required="" class="input" type="number" name="price" id="price"
@@ -138,7 +125,7 @@
         });
 
         var lastNoPart = {{ $noPart }};
-        var kodePart = String(lastNoPart + 1).padStart(5, '0');
+        var kodePart = String(lastNoPart + 1).padStart(5, '1');
         document.getElementById('kode_part').value = kodePart;
 
         console.log(lastNo);
