@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/', [StockController::class, 'dashboard']);
 Route::get('/master-data/sparepart', [SparePartController::class, 'index']);
 Route::get('/stock', [StockController::class, 'index']);
 Route::get('/log-stock', [StockController::class, 'logStock']);
@@ -35,4 +36,5 @@ Route::get('/detail-modal/sparepart/{id}', [SparePartController::class, 'modalUp
 Route::post('/add/SparePart', [SparePartController::class, 'addSparepart']);
 Route::post('/update/SparePart/{id}', [SparePartController::class, 'updateSparepart']);
 Route::post('/delete/SparePart/{id}', [SparePartController::class, 'deleteSparepart']);
-Route::get('/detail-modal/sparepart/{id}', [SparePartController::class, 'modalUpdate']);
+Route::get('/detail-modal/log-stock/{id}', [StockController::class, 'detailStock']);
+Route::post('/add/stock/out', [StockController::class, 'outStock']);

@@ -34,74 +34,20 @@
         </div>
     </div>
 </div>
-  <!-- Modal Add Training -->
-  <div class="modal fade border-0" id="newTraining" tabindex="-1" aria-labelledby="newTrainingLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md border-0">
-        <div class="modal-content">
-            <form action="/add/stock" method="post" class="form" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-header d-flex justify-content-between">
-                    <h1 class="modal-title fs-5 heading" id="newTrainingLabel">Stok Masuk</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="mb-3 form">
-                                <label for="staticEmail2" class="form-label heading">Pilih Spare Part</label>
-                                <select class="form-select form-select-sm input" aria-label="Small select example" id="sparepart" name="no_sparepart" required>
-                                    <option>-</option>
-                                    @foreach ($data as $item)
-                                        <option value="{{ $item->no_sparepart }}">{{ $item->sparepart->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mb-3 form">
-                                <label for="exampleFormControlInput1" class="form-label heading">Jumlah Stok Masuk</label>
-                                <input required="" class="input" type="number" name="qty" id="qty"
-                                    required />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-  <!-- Modal Edit-->
-  <div class="modal fade border-0" id="editStock" tabindex="-1" aria-labelledby="detailTrainingLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-md border-0">
-      <div class="modal-content">
-          <div class="modal-header d-flex justify-content-between">
-              <h1 class="modal-title fs-5 heading" id="body-editLabel">Edit</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="body-edit">
-          </div>
 
-      </div>
-  </div>
-</div>
 <script>
     // Guidance Table
     var table = $('#dataTraining').DataTable({
     "dom": '<"d-flex justify-content-between"<"pull-left"l><"pull-left"f><"pull-right"B>>tip',
-        buttons: [{
-            text: 'Stock In (+)',
-            className: 'btn btn-success mt-4', // Customize button style
-            action: function(e, dt, node, config) {
-                // Define what happens when the button is clicked
-                // window.location.href = '/detail/po';
-                $('#newTraining').modal('show');
-            }
-        }],
+        // buttons: [{
+        //     text: 'Stock In (+)',
+        //     className: 'btn btn-success mt-4', // Customize button style
+        //     action: function(e, dt, node, config) {
+        //         // Define what happens when the button is clicked
+        //         // window.location.href = '/detail/po';
+        //         $('#newTraining').modal('show');
+        //     }
+        // }],
     });
 
         // // Modal Edit Stock
@@ -110,5 +56,6 @@
             $('#editStock').modal('show');
             $('#body-edit').load(modalUrl);
         }
+
 </script>
 @endsection

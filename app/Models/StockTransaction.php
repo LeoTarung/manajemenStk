@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class StockTransaction extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'no_transaction';
+    protected $guarded = [];
+
 }
