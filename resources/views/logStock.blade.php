@@ -19,7 +19,11 @@
                         @foreach ($log as $item)
                             <tr >
                                 <td class="text-center">{{ $item->no_transaction }}</td>
-                                <td class="text-center">{{ $item->type }}</td>
+                                @if($item->type == 'in')
+                                    <td class="text-center">{{ $item->type }} <i class="fa fa-arrow-down" style="color: yellowgreen"></i></td>
+                                @else
+                                    <td class="text-center">{{ $item->type }} <i class="fa fa-arrow-up" style="color: red"></i></td>
+                                @endif
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->date)->format('d-m-Y') }}</td>
                                 <td class="text-center"><button class="btn btn-info" onclick="modalEdit({{ $item->no_transaction }})"><i class="fa fa-info"></i></button></td>
                             </tr>
@@ -240,7 +244,7 @@
                             <select class="form-select form-select-sm input" aria-label="Small select example" id="sparepart_out_${rowCounter}" name="no_sparepart_out[]" required>
                                 <option>-</option>
                                 @foreach ($data as $item)
-                                    <option value="{{ $item->no_sparepart }}">{{ $item->sparepart->name }}</option>
+                                     <option value="{{ $item->no_sparepart }}">{{ $item->sparepart->name }}</option>
                                 @endforeach
                             </select>
                         </div>

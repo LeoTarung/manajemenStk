@@ -6,6 +6,7 @@ use App\Models\DetailTransaction;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\StockTransaction;
+use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {
@@ -101,10 +102,10 @@ class StockController extends Controller
     }
 
     public function logStock()
-    {
+    {   
         $title = 'Log Transaction';
         $data = Stock::all();
-        $log = StockTransaction::all()->sortByDesc('created_at');
+        $log = StockTransaction::all()->sortByDesc('date');
         // $lastData = $data->last();
 
         return view('logStock', compact('title', 'data', 'log'));
@@ -121,9 +122,30 @@ class StockController extends Controller
     public function dashboard()
     {
         $title = 'Dashboard';
-        $data = Stock::all();
-        // $lastData = $data->last();
-
-        return view('dashboard', compact('title', 'data'));
+        $dataStock = Stock::whereMonth('created_at', date('m'))->get();
+        $dataTransaction = StockTransaction::whereMonth('created_at', date('m'))->get();
+        $stockIn = StockTransaction::where('type', 'in')->whereMonth('created_at', date('m'))->get();
+        $stockOut = StockTransaction::where('type', 'out')->whereMonth('created_at', date('m'))->get();
+        $topOutParts = DetailTransaction::with('sparepart')
+                        ->select('no_sparepart', DB::raw('SUM(qty) as total_qty'))
+                        ->whereMonth('created_at', date('m'))
+                        ->whereHas('stockTransaction', function($query) {
+                            $query->where('type', 'out');
+                        })
+                        ->groupBy('no_sparepart')
+                        ->orderBy('total_qty', 'desc')
+                        ->take(5)
+                        ->get();
+                        // dd($topOutParts);
+    $topInParts = DetailTransaction::select('no_sparepart', DB::raw('SUM(qty) as total_qty'))
+                        ->whereMonth('created_at', date('m'))
+                        ->whereHas('stockTransaction', function($query) {
+                            $query->where('type', 'in');
+                        })
+                        ->groupBy('no_sparepart')
+                        ->orderBy('total_qty', 'desc')
+                        ->take(5)
+                        ->get();
+        return view('dashboard', compact('title', 'dataStock', 'dataTransaction', 'topOutParts', 'topInParts', 'stockIn', 'stockOut'));
     }
 }
